@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springbootredis.experiment.dao.mapper.NodeInstanceMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springbootredis.experiment.dao.model.NodeInstance" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="node_id" property="nodeId" jdbcType="BIGINT" />
+    <result column="experiment_id" property="experimentId" jdbcType="BIGINT" />
+    <result column="node_name" property="nodeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, node_id, experiment_id, node_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springbootredis.experiment.dao.model.NodeInstanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node_instance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from node_instance
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from node_instance
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springbootredis.experiment.dao.model.NodeInstanceExample" >
+    delete from node_instance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springbootredis.experiment.dao.model.NodeInstance" >
+    insert into node_instance (id, node_id, experiment_id, 
+      node_name)
+    values (#{id,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT}, #{experimentId,jdbcType=BIGINT}, 
+      #{nodeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springbootredis.experiment.dao.model.NodeInstance" >
+    insert into node_instance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="nodeId != null" >
+        node_id,
+      </if>
+      <if test="experimentId != null" >
+        experiment_id,
+      </if>
+      <if test="nodeName != null" >
+        node_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="nodeId != null" >
+        #{nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="experimentId != null" >
+        #{experimentId,jdbcType=BIGINT},
+      </if>
+      <if test="nodeName != null" >
+        #{nodeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springbootredis.experiment.dao.model.NodeInstanceExample" resultType="java.lang.Integer" >
+    select count(*) from node_instance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node_instance
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.nodeId != null" >
+        node_id = #{record.nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.experimentId != null" >
+        experiment_id = #{record.experimentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.nodeName != null" >
+        node_name = #{record.nodeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node_instance
+    set id = #{record.id,jdbcType=BIGINT},
+      node_id = #{record.nodeId,jdbcType=BIGINT},
+      experiment_id = #{record.experimentId,jdbcType=BIGINT},
+      node_name = #{record.nodeName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springbootredis.experiment.dao.model.NodeInstance" >
+    update node_instance
+    <set >
+      <if test="nodeId != null" >
+        node_id = #{nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="experimentId != null" >
+        experiment_id = #{experimentId,jdbcType=BIGINT},
+      </if>
+      <if test="nodeName != null" >
+        node_name = #{nodeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springbootredis.experiment.dao.model.NodeInstance" >
+    update node_instance
+    set node_id = #{nodeId,jdbcType=BIGINT},
+      experiment_id = #{experimentId,jdbcType=BIGINT},
+      node_name = #{nodeName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
